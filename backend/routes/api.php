@@ -29,6 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/public/dashboard', function () {
             return response()->json(['message' => 'ยินดีต้อนรับประชาชนทั่วไป']);
         });
+
+        // ยื่นคำขอและดูรายการของตัวเอง
+        Route::post('/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'store']);
+        Route::get('/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'index']);
     });
 });
 
