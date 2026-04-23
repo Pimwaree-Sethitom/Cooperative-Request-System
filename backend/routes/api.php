@@ -1,11 +1,21 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Routes สำหรับ Authentication
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
-// ดึงข้อมูล User ทั้งหมด (ทดสอบผ่าน Postman)
-Route::get('/users', [\App\Http\Controllers\Api\UserController::class, 'index']);
+// Routes ที่ต้องล็อกอินก่อนถึงจะเข้าได้
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [AuthController::class, 'me']);
+
+    // ดึงข้อมูล User ทั้งหมด (ทดสอบผ่าน Postman)
+    Route::get('/users', [UserController::class, 'index']);
+
+});
+
+
