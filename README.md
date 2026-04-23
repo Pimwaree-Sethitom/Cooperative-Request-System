@@ -1,15 +1,15 @@
-# Cooperative Request System (Backend)
+# Cooperative Request System
 
 ระบบยื่นคำขอจัดตั้งสหกรณ์ (Backend API) พัฒนาด้วย Laravel 12 และ Docker
 
 ## 🚀 วิธีการรันโปรเจกต์ (Getting Started)
 
 ### 1. เตรียมไฟล์สภาพแวดล้อม (.env)
-คัดลอกไฟล์ `.env.example` ไปเป็น `.env` และตั้งค่าฐานข้อมูลให้ตรงกับ Docker:
+คัดลอกไฟล์ `.env.example` ในโฟลเดอร์ `backend` ไปเป็น `.env` และตั้งค่าฐานข้อมูลให้ตรงกับ Docker:
 ```bash
-cp .env.example .env
+cp backend/.env.example backend/.env
 ```
-**ค่าที่ต้องตรวจสอบใน .env:**
+**ค่าที่ต้องตรวจสอบใน backend/.env:**
 ```env
 DB_CONNECTION=mysql
 DB_HOST=db
@@ -20,7 +20,7 @@ DB_PASSWORD=laravel_password
 ```
 
 ### 2. รันระบบผ่าน Docker
-ใช้คำสั่ง Docker Compose เพื่อสร้างและรัน Container:
+ใช้คำสั่ง Docker Compose เพื่อสร้างและรัน Container (รันจากโฟลเดอร์นอกสุด):
 ```bash
 docker compose up -d --build
 ```
@@ -65,23 +65,18 @@ docker compose exec app php artisan migrate:fresh --seed
 - **ขั้นตอน:**
     1. เปิดโปรแกรม Postman
     2. กดปุ่ม **Import** แล้วเลือกไฟล์ด้านบน
-    3. เมื่อ Login สำเร็จ ให้นำ Token มาใส่ในแท็บ **Auth (Bearer Token)** ของ Request อื่นๆ
+    3. เมื่อ Login สำเร็จ **Token จะถูกบันทึกลงตัวแปรอัตโนมัติ** คุณสามารถกดเรียก API อื่นๆ ต่อได้เลย
 
 ---
 
 ## 📂 โครงสร้างโปรเจกต์ (Project Structure)
 
 ```text
-backend/
-├── app/
-│   ├── Http/
-│   │   ├── Controllers/   # ตัวควบคุม Request/Response
-│   │   └── Responses/     # มาตรฐานรูปแบบ API Response
-│   ├── Models/            # โมเดลฐานข้อมูล (User, Cooperative, etc.)
-│   └── Services/          # ส่วนจัดการ Business Logic (Service Layer)
-├── database/
-│   ├── migrations/        # ไฟล์ออกแบบตารางฐานข้อมูล
-│   └── seeders/           # ไฟล์ข้อมูลเริ่มต้นของระบบ
-└── routes/
-    └── api.php            # เส้นทางเชื่อมต่อ API ทั้งหมด
+.
+├── backend/               # โฟลเดอร์ซอร์สโค้ด Laravel
+│   ├── app/               # Logic หลักของระบบ
+│   ├── database/          # Migrations และ Seeders
+│   └── routes/            # เส้นทาง API
+├── postman/               # ไฟล์ Postman Collection
+└── docker-compose.yml     # ไฟล์ตั้งค่า Docker
 ```
