@@ -1,312 +1,322 @@
 {
-  "info": {
-    "_postman_id": "20180c1a-84c6-4740-ac79-a832b2123cb2",
-    "name": "Cooperative API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "54252818",
-    "_collection_link": "https://go.postman.co/collection/54252818-20180c1a-84c6-4740-ac79-a832b2123cb2?source=collection_link"
-  },
-  "item": [
-    {
-      "name": "Auth",
-      "item": [
-        {
-          "name": "Register",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"full_name\": \"pimwaree sethitom\",\r\n    \"email\": \"test_user@example.com\",\r\n    \"password\": \"password123\",\r\n    \"password_confirmation\": \"password123\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/register",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "register"
-              ]
-            },
-            "description": "{  \n\"full_name\": \"string\",  \n\"email\": \"string\",  \n\"password\": \"string\",  \n\"password_confirmation\": \"string\"  \n}"
-          },
-          "response": []
-        },
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"staff@test.com\",\r\n    \"password\": \"staff123\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/login",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "login"
-              ]
-            },
-            "description": "{  \n\"email\": \"string\",  \n\"password\": \"string\"  \n}"
-          },
-          "response": []
-        },
-        {
-          "name": "Logout",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "1|7GIptHOHD4JEkr1pfWBLlLCxd2Mm03DpJqfsrxGMcb065c8b",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/logout",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "logout"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Public",
-      "item": [
-        {
-          "name": "Create Request",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "2|29rFsLZjTuFWXVqOw7GTMsDHRgZ7DToOV1vXF20608265c99",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"สหกรณ์ออมทรัพย์สีแดง\",\r\n    \"description\": \"คำอธิบาย...\",\r\n    \"members\": [\r\n        {\"full_name\": \"สมาชิกคนที่ 1\", \"phone\": \"081-111-1111\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 2\", \"phone\": \"081-222-2222\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 3\", \"phone\": \"081-333-3333\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 4\", \"phone\": \"081-444-4444\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 5\", \"phone\": \"081-555-5555\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 6\", \"phone\": \"081-666-6666\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 7\", \"phone\": \"081-777-7777\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 8\", \"phone\": \"081-888-8888\"},\r\n        {\"full_name\": \"สมาชิกคนที่ 9\", \"phone\": \"081-999-9999\"}\r\n    ]\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/cooperatives",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "cooperatives"
-              ]
-            },
-            "description": "{  \n\"name\": \"string\",  \n\"description\": \"string\"\n\n\"members\": \\[  \n{\"full_name\": \"string\", \"phone\": \"081-111-1111\"},  \n{\"full_name\": \"string\", \"phone\": \"081-222-2222\"},  \n{\"full_name\": \"string\", \"phone\": \"081-333-3333\"},  \n{\"full_name\": \"string\", \"phone\": \"081-444-4444\"},  \n{\"full_name\": \"string\", \"phone\": \"081-555-5555\"},  \n{\"full_name\": \"string\", \"phone\": \"081-666-6666\"},  \n{\"full_name\": \"string\", \"phone\": \"081-777-7777\"},  \n{\"full_name\": \"string\", \"phone\": \"081-888-8888\"},  \n{\"full_name\": \"string\", \"phone\": \"081-999-9999\"}  \n\\]  \n}"
-          },
-          "response": []
-        },
-        {
-          "name": "List My Requests",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "2|29rFsLZjTuFWXVqOw7GTMsDHRgZ7DToOV1vXF20608265c99",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/cooperatives",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "cooperatives"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Staff",
-      "item": [
-        {
-          "name": "View all requests",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "3|RjJHjfNHqNQUIJIryQxeSwgUUeFG5WKqM5NeDAOS89b99c3d",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/staff/cooperatives",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "staff",
-                "cooperatives"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Filter  requests",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "3|RjJHjfNHqNQUIJIryQxeSwgUUeFG5WKqM5NeDAOS89b99c3d",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/staff/cooperatives?status=pending",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "staff",
-                "cooperatives"
-              ],
-              "query": [
-                {
-                  "key": "status",
-                  "value": "pending"
-                }
-              ]
-            },
-            "description": "StartFragment\n\n1. **`pending`**: ดูคำขอที่กำลังรอตรวจ `http://localhost:8000/api/staff/cooperatives?status=pending`\n    \n2. **`approved`**: ดูคำขอที่อนุมัติไปแล้ว `http://localhost:8000/api/staff/cooperatives?status=approved`\n    \n3. **`rejected`**: ดูคำขอที่ถูกปฏิเสธไปแล้ว `http://localhost:8000/api/staff/cooperatives?status=rejected`\n    \n\nEndFragment"
-          },
-          "response": []
-        },
-        {
-          "name": "New Request",
-          "request": {
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "3|RjJHjfNHqNQUIJIryQxeSwgUUeFG5WKqM5NeDAOS89b99c3d",
-                  "type": "string"
-                }
-              ]
-            },
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"status\": \"approved\", \r\n    \"staff_note\": \"เอกสารครบถ้วน สมาชิกครบตามเกณฑ์ อนุมัติครับ\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{base_url}}/staff/cooperatives/2/review",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "staff",
-                "cooperatives",
-                "2",
-                "review"
-              ]
-            },
-            "description": "{  \n\"status\": \"approved\", // หรือ \"rejected\"  \n\"staff_note\": \"เอกสารครบถ้วน สมาชิกครบตามเกณฑ์ อนุมัติครับ\"  \n}"
-          },
-          "response": []
-        }
-      ]
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          "pm.request.headers.add({\r",
-          "    key: 'Accept',\r",
-          "    value: 'application/json'\r",
-          "});\r",
-          "pm.request.headers.add({\r",
-          "    key: 'Content-Type',\r",
-          "    value: 'application/json'\r",
-          "});\r",
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "requests": {},
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "base_url",
-      "value": ""
-    }
-  ]
+	"info": {
+		"_postman_id": "c7a8b9d0-e1f2-4a3b-9c8d-7e6f5a4b3c2d",
+		"name": "Cooperative API",
+		"description": "Collection สำหรับทดสอบระบบสหกรณ์ แบ่งตามบทบาท Staff และ Public",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"สมชาย ใจดี\",\n    \"email\": \"somchai@test.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Staff)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"staff@test.com\",\n    \"password\": \"staff123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login (Public)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"public@test.com\",\n    \"password\": \"public123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get My Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public (ประชาชน)",
+			"item": [
+				{
+					"name": "Submit Cooperative Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"สหกรณ์ออมทรัพย์ไทยพัฒนา\",\n    \"description\": \"เพื่อสวัสดิการพนักงาน\",\n    \"members\": [\n        {\"full_name\": \"นาย ก\"}, {\"full_name\": \"นาย ข\"}, {\"full_name\": \"นาย ค\"},\n        {\"full_name\": \"นาย ง\"}, {\"full_name\": \"นาย จ\"}, {\"full_name\": \"นาย ฉ\"},\n        {\"full_name\": \"นาย ช\"}, {\"full_name\": \"นาย ซ\"}, {\"full_name\": \"นาย ฌ\"},\n        {\"full_name\": \"นาย ญ\"}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cooperatives",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cooperatives"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List My Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/cooperatives",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cooperatives"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Staff (เจ้าหน้าที่)",
+			"item": [
+				{
+					"name": "List All Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/staff/cooperatives?status=pending",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff",
+								"cooperatives"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "pending"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Review Request (Approve/Reject)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"approved\",\n    \"staff_note\": \"เอกสารครบถ้วน สมาชิกครบตามเกณฑ์ อนุมัติครับ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/staff/cooperatives/1/review",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"staff",
+								"cooperatives",
+								"1",
+								"review"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.request.headers.add({key: 'Accept', value: 'application/json'});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
 }
