@@ -30,7 +30,8 @@ backend/
 │   │   ├── Controllers/        # ตัวควบคุมการทำงานของแต่ละหน้า
 │   │   └── Middleware/         # ตัวกรองคำสั่ง (เช่น ตรวจสอบการ Login)
 │   ├── Models/                 # โมเดลสำหรับติดต่อกับ Database
-│   └── Providers/              # ตัวตั้งค่าระบบเริ่มต้น
+│   ├── Providers/              # ตัวตั้งค่าระบบเริ่มต้น
+│   └── Services/               # ส่วนจัดการ Business Logic (Service Layer)
 ├── bootstrap/                  # ไฟล์สำหรับเริ่มต้นการทำงานของ Framework
 ├── config/                     # ไฟล์ตั้งค่าทั้งหมดของโปรเจกต์
 ├── database/                   # ส่วนจัดการฐานข้อมูล

@@ -3,18 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
+    protected UserService $userService;
+
+    /**
+     * สร้าง Instance ใหม่พร้อมฉีด (Inject) UserService เข้ามา
+     */
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * ดึงรายชื่อ User ทั้งหมดพร้อมข้อมูล Role
      */
     public function index(): JsonResponse
     {
-        // ดึง User ทั้งหมดพร้อมดึงข้อมูล Role ที่เชื่อมกันอยู่ (Eager Loading)
-        $users = User::with('role')->get();
+        // เรียกใช้ Logic จาก Service
+        $users = $this->userService->getAllUsersWithRoles();
 
         return response()->json([
             'status' => 'success',
