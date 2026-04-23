@@ -26,9 +26,6 @@ class UserController extends Controller
         // เรียกใช้ Logic จาก Service
         $users = $this->userService->getAllUsersWithRoles();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $users
-        ]);
+        return $this->success($users, 'เรียกข้อมูลผู้ใช้สำเร็จ');
     }
 }

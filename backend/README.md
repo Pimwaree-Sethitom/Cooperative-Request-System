@@ -28,7 +28,8 @@ backend/
 ├── app/                        # โค้ดหลักของระบบ (Logic)
 │   ├── Http/
 │   │   ├── Controllers/        # ตัวควบคุมการทำงานของแต่ละหน้า
-│   │   └── Middleware/         # ตัวกรองคำสั่ง (เช่น ตรวจสอบการ Login)
+│   │   ├── Middleware/         # ตัวกรองคำสั่ง (เช่น ตรวจสอบการ Login)
+│   │   └── Responses/          # ส่วนจัดการรูปแบบการส่งข้อมูลกลับ (API Response)
 │   ├── Models/                 # โมเดลสำหรับติดต่อกับ Database
 │   ├── Providers/              # ตัวตั้งค่าระบบเริ่มต้น
 │   └── Services/               # ส่วนจัดการ Business Logic (Service Layer)
