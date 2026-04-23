@@ -3,41 +3,45 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CooperativeController;
 
-// Routes สำหรับ Authentication
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+
+// --- Public Routes (ไม่ต้องล็อกอิน) ---
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Routes ที่ต้องล็อกอินก่อนถึงจะเข้าได้
+// --- Protected Routes (ต้องล็อกอินผ่าน Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
     
-    // 1. ดูโปรไฟล์ตัวเอง และ Logout (ทำได้ทุก Role)
+    // User Profile & Logout
     Route::get('/profile', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // 2. กลุ่มเส้นทางสำหรับ "เจ้าหน้าที่" (Staff) เท่านั้น
-    Route::middleware('role:staff')->group(function () {
-        Route::get('/staff/dashboard', function () {
-            return response()->json(['message' => 'ยินดีต้อนรับเจ้าหน้าที่']);
-        });
-        
-        // ดูคำขอทั้งหมด และทำการ Review
-        Route::get('/staff/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'indexAll']);
-        Route::put('/staff/cooperatives/{id}/review', [\App\Http\Controllers\Api\CooperativeController::class, 'review']);
-
+    // [เจ้าหน้าที่] Staff Routes
+    Route::middleware('role:staff')->prefix('staff')->group(function () {
+        Route::get('/dashboard', fn() => response()->json(['message' => 'Staff Dashboard']));
         Route::get('/users', [UserController::class, 'index']);
+        
+        // การจัดการคำขอสหกรณ์สำหรับ Staff
+        Route::prefix('cooperatives')->group(function () {
+            Route::get('/', [CooperativeController::class, 'indexAll']);
+            Route::put('/{id}/review', [CooperativeController::class, 'review']);
+        });
     });
 
-    // 3. กลุ่มเส้นทางสำหรับ "ประชาชน" (Public) เท่านั้น
+    // [ประชาชน] Public Routes
     Route::middleware('role:public')->group(function () {
-        Route::get('/public/dashboard', function () {
-            return response()->json(['message' => 'ยินดีต้อนรับประชาชนทั่วไป']);
+        Route::get('/public/dashboard', fn() => response()->json(['message' => 'Public Dashboard']));
+        
+        // การยื่นคำขอสหกรณ์สำหรับประชาชน
+        Route::prefix('cooperatives')->group(function () {
+            Route::get('/', [CooperativeController::class, 'index']);
+            Route::post('/', [CooperativeController::class, 'store']);
         });
-
-        // ยื่นคำขอและดูรายการของตัวเอง
-        Route::post('/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'store']);
-        Route::get('/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'index']);
     });
 });
-
-
