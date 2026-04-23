@@ -15,11 +15,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // สร้าง Roles
+        $publicRole = \App\Models\Role::create([
+            'name' => 'public',
+            'description' => 'ประชาชน',
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $staffRole = \App\Models\Role::create([
+            'name' => 'staff',
+            'description' => 'เจ้าหน้าที่',
+        ]);
+
+        // สร้าง User: Public
+        \App\Models\User::create([
+            'full_name' => 'Public User',
+            'email' => 'public@test.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('public123'),
+            'role_id' => $publicRole->id,
+        ]);
+
+        // สร้าง User: Staff
+        \App\Models\User::create([
+            'full_name' => 'Staff User',
+            'email' => 'staff@test.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('staff123'),
+            'role_id' => $staffRole->id,
         ]);
     }
 }
