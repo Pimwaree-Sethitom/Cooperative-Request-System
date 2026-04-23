@@ -23,16 +23,37 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 ## โครงสร้างโปรเจกต์ (Project Structure)
 
-นี่คือคำอธิบายโฟลเดอร์หลักในโปรเจกต์ Laravel สำหรับผู้เริ่มต้น:
-
-*   **`app/`**: เก็บโค้ดหลักของระบบ เช่น **Models** (จัดการ Database) และ **Controllers** (จัดการ Logic)
-*   **`routes/`**: กำหนดเส้นทางของเว็บไซต์ (URL) เช่น `web.php` สำหรับหน้าเว็บทั่วไป
-*   **`resources/views/`**: เก็บไฟล์หน้าตาของเว็บไซต์ (Blade templates)
-*   **`database/migrations/`**: ไฟล์สำหรับออกแบบและสร้างตารางใน Database
-*   **`public/`**: ไฟล์ที่เข้าถึงได้จากภายนอก เช่น รูปภาพ, CSS, JS
-*   **`config/`**: ไฟล์ตั้งค่าต่างๆ ของระบบ
-*   **`storage/`**: เก็บไฟล์ Log และไฟล์ที่ User อัปโหลด
-*   **`tests/`**: เก็บไฟล์สำหรับเขียนโค้ดทดสอบระบบ (Automated Tests)
+```text
+backend/
+├── app/                        # โค้ดหลักของระบบ (Logic)
+│   ├── Http/
+│   │   ├── Controllers/        # ตัวควบคุมการทำงานของแต่ละหน้า
+│   │   └── Middleware/         # ตัวกรองคำสั่ง (เช่น ตรวจสอบการ Login)
+│   ├── Models/                 # โมเดลสำหรับติดต่อกับ Database
+│   └── Providers/              # ตัวตั้งค่าระบบเริ่มต้น
+├── bootstrap/                  # ไฟล์สำหรับเริ่มต้นการทำงานของ Framework
+├── config/                     # ไฟล์ตั้งค่าทั้งหมดของโปรเจกต์
+├── database/                   # ส่วนจัดการฐานข้อมูล
+│   ├── factories/              # สำหรับจำลองข้อมูล (Fake data)
+│   ├── migrations/             # ไฟล์ออกแบบตาราง Database
+│   └── seeders/                # ข้อมูลเริ่มต้นสำหรับระบบ
+├── public/                     # ไฟล์ที่เข้าถึงจากภายนอกได้ (รูปภาพ, index.php)
+├── resources/                  # ทรัพยากรของหน้าเว็บ
+│   ├── css/                    # ไฟล์ Style ต้นฉบับ
+│   ├── js/                     # ไฟล์ JavaScript ต้นฉบับ
+│   └── views/                  # ไฟล์หน้าจอ (Blade templates)
+├── routes/                     # กำหนดเส้นทาง URL
+│   ├── api.php                 # เส้นทางสำหรับ API
+│   └── web.php                 # เส้นทางสำหรับหน้าเว็บทั่วไป
+├── storage/                    # เก็บ Log และไฟล์ที่อัปโหลด
+├── tests/                      # โค้ดสำหรับทดสอบระบบ (Automated Tests)
+├── .env                        # ไฟล์เก็บความลับและการตั้งค่า (Database, Key)
+├── Dockerfile                  # การตั้งค่า Docker สำหรับโปรเจกต์นี้
+├── nginx.conf                  # การตั้งค่า Web Server (Nginx)
+├── artisan                     # คำสั่งสำหรับจัดการระบบผ่าน Terminal
+├── composer.json               # รายการ PHP Dependencies
+└── vite.config.js              # การตั้งค่าสำหรับรวมไฟล์ Frontend (Vite)
+```
 
 
 ## Learning Laravel
