@@ -59,17 +59,13 @@ docker compose exec app php artisan migrate:fresh --seed
 
 ## 📡 การทดสอบ API (Postman)
 
+คุณสามารถนำเข้าไฟล์ **Postman Collection** เพื่อทดสอบ API ได้ทันที:
+- **ไฟล์ Collection:** `postman/Cooperative API.postman_collection.json`
 - **Base URL:** `http://localhost:8000/api`
-- **การยืนยันตัวตน:** ใช้ **Bearer Token** (จะได้หลังจาก Login สำเร็จ)
-- **โครงสร้าง Response:**
-  ```json
-  {
-      "status": "success",
-      "message": "...",
-      "data": { ... },
-      "errors": null
-  }
-  ```
+- **ขั้นตอน:**
+    1. เปิดโปรแกรม Postman
+    2. กดปุ่ม **Import** แล้วเลือกไฟล์ด้านบน
+    3. เมื่อ Login สำเร็จ ให้นำ Token มาใส่ในแท็บ **Auth (Bearer Token)** ของ Request อื่นๆ
 
 ---
 
