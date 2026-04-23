@@ -1,96 +1,91 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cooperative Request System (Backend)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+ระบบยื่นคำขอจัดตั้งสหกรณ์ (Backend API) พัฒนาด้วย Laravel 12 และ Docker
 
-## About Laravel
+## 🚀 วิธีการรันโปรเจกต์ (Getting Started)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1. เตรียมไฟล์สภาพแวดล้อม (.env)
+คัดลอกไฟล์ `.env.example` ไปเป็น `.env` และตั้งค่าฐานข้อมูลให้ตรงกับ Docker:
+```bash
+cp .env.example .env
+```
+**ค่าที่ต้องตรวจสอบใน .env:**
+```env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=cooperative_db
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_password
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 2. รันระบบผ่าน Docker
+ใช้คำสั่ง Docker Compose เพื่อสร้างและรัน Container:
+```bash
+docker compose up -d --build
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 3. ติดตั้ง Dependencies และตั้งค่าระบบ
+รันคำสั่งเหล่านี้เพื่อเตรียมความพร้อมของแอปพลิเคชัน:
+```bash
+# ติดตั้ง PHP Libraries
+docker compose exec app composer install
 
-## โครงสร้างโปรเจกต์ (Project Structure)
+# สร้างกุญแจความปลอดภัย
+docker compose exec app php artisan key:generate
+
+# ติดตั้งระบบ API
+docker compose exec app php artisan install:api
+```
+
+### 4. จัดการฐานข้อมูล (Migrate & Seed)
+สร้างตารางทั้งหมดและใส่ข้อมูลเริ่มต้น (Roles และ User ทดสอบ):
+```bash
+docker compose exec app php artisan migrate:fresh --seed
+```
+
+---
+
+## 🔑 ข้อมูลสำหรับทดสอบ (Test Accounts)
+
+ระบบมาพร้อมกับ User เริ่มต้น 2 บทบาท ดังนี้:
+
+| Role | Email | Password | หน้าที่ |
+|------|-------|----------|-------|
+| **เจ้าหน้าที่ (Staff)** | `staff@test.com` | `staff123` | ตรวจสอบ, อนุมัติ/ปฏิเสธคำขอ |
+| **ประชาชน (Public)** | `public@test.com` | `public123` | ยื่นคำขอจัดตั้งสหกรณ์, ดูรายการของตัวเอง |
+
+---
+
+## 📡 การทดสอบ API (Postman)
+
+- **Base URL:** `http://localhost:8000/api`
+- **การยืนยันตัวตน:** ใช้ **Bearer Token** (จะได้หลังจาก Login สำเร็จ)
+- **โครงสร้าง Response:**
+  ```json
+  {
+      "status": "success",
+      "message": "...",
+      "data": { ... },
+      "errors": null
+  }
+  ```
+
+---
+
+## 📂 โครงสร้างโปรเจกต์ (Project Structure)
 
 ```text
 backend/
-├── app/                        # โค้ดหลักของระบบ (Logic)
+├── app/
 │   ├── Http/
-│   │   ├── Controllers/        # ตัวควบคุมการทำงานของแต่ละหน้า
-│   │   ├── Middleware/         # ตัวกรองคำสั่ง (เช่น ตรวจสอบการ Login)
-│   │   └── Responses/          # ส่วนจัดการรูปแบบการส่งข้อมูลกลับ (API Response)
-│   ├── Models/                 # โมเดลสำหรับติดต่อกับ Database
-│   ├── Providers/              # ตัวตั้งค่าระบบเริ่มต้น
-│   └── Services/               # ส่วนจัดการ Business Logic (Service Layer)
-├── bootstrap/                  # ไฟล์สำหรับเริ่มต้นการทำงานของ Framework
-├── config/                     # ไฟล์ตั้งค่าทั้งหมดของโปรเจกต์
-├── database/                   # ส่วนจัดการฐานข้อมูล
-│   ├── factories/              # สำหรับจำลองข้อมูล (Fake data)
-│   ├── migrations/             # ไฟล์ออกแบบตาราง Database
-│   └── seeders/                # ข้อมูลเริ่มต้นสำหรับระบบ
-├── public/                     # ไฟล์ที่เข้าถึงจากภายนอกได้ (รูปภาพ, index.php)
-├── resources/                  # ทรัพยากรของหน้าเว็บ
-│   ├── css/                    # ไฟล์ Style ต้นฉบับ
-│   ├── js/                     # ไฟล์ JavaScript ต้นฉบับ
-│   └── views/                  # ไฟล์หน้าจอ (Blade templates)
-├── routes/                     # กำหนดเส้นทาง URL
-│   ├── api.php                 # เส้นทางสำหรับ API
-│   └── web.php                 # เส้นทางสำหรับหน้าเว็บทั่วไป
-├── storage/                    # เก็บ Log และไฟล์ที่อัปโหลด
-├── tests/                      # โค้ดสำหรับทดสอบระบบ (Automated Tests)
-├── .env                        # ไฟล์เก็บความลับและการตั้งค่า (Database, Key)
-├── Dockerfile                  # การตั้งค่า Docker สำหรับโปรเจกต์นี้
-├── nginx.conf                  # การตั้งค่า Web Server (Nginx)
-├── artisan                     # คำสั่งสำหรับจัดการระบบผ่าน Terminal
-├── composer.json               # รายการ PHP Dependencies
-└── vite.config.js              # การตั้งค่าสำหรับรวมไฟล์ Frontend (Vite)
+│   │   ├── Controllers/   # ตัวควบคุม Request/Response
+│   │   └── Responses/     # มาตรฐานรูปแบบ API Response
+│   ├── Models/            # โมเดลฐานข้อมูล (User, Cooperative, etc.)
+│   └── Services/          # ส่วนจัดการ Business Logic (Service Layer)
+├── database/
+│   ├── migrations/        # ไฟล์ออกแบบตารางฐานข้อมูล
+│   └── seeders/           # ไฟล์ข้อมูลเริ่มต้นของระบบ
+└── routes/
+    └── api.php            # เส้นทางเชื่อมต่อ API ทั้งหมด
 ```
-
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
