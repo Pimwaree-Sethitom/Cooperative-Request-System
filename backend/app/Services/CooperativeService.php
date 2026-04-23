@@ -46,9 +46,39 @@ class CooperativeService
     public function getMyRequests()
     {
         // ดึงสหกรณ์ของตัวเอง พร้อมโหลดรายชื่อสมาชิกออกมาด้วย (Eager Loading)
-        return Cooperative::with('creator')
+        return Cooperative::with(['creator', 'members'])
             ->where('created_by', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
+    }
+
+    /**
+     * ดึงคำขอทั้งหมดในระบบ (สำหรับ Staff) - กรองตามสถานะได้
+     */
+    public function getAllRequests(?string $status = null)
+    {
+        $query = Cooperative::with(['creator', 'members', 'reviewer']);
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        return $query->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * ดำเนินการอนุมัติหรือปฏิเสธคำขอ
+     */
+    public function reviewRequest(Cooperative $cooperative, array $data)
+    {
+        // บันทึกการตรวจสอบ
+        $cooperative->update([
+            'status' => $data['status'],
+            'staff_note' => $data['staff_note'] ?? null,
+            'reviewed_by' => Auth::id(),
+            'reviewed_at' => now(),
+        ]);
+
+        return $cooperative->load(['creator', 'members', 'reviewer']);
     }
 }

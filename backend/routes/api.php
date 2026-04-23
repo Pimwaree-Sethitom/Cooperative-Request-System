@@ -20,7 +20,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/staff/dashboard', function () {
             return response()->json(['message' => 'ยินดีต้อนรับเจ้าหน้าที่']);
         });
-        // เส้นทางดึงข้อมูล User ทั้งหมด ย้ายมาไว้ที่นี่เพื่อให้เฉพาะ Staff ดูได้
+        
+        // ดูคำขอทั้งหมด และทำการ Review
+        Route::get('/staff/cooperatives', [\App\Http\Controllers\Api\CooperativeController::class, 'indexAll']);
+        Route::put('/staff/cooperatives/{id}/review', [\App\Http\Controllers\Api\CooperativeController::class, 'review']);
+
         Route::get('/users', [UserController::class, 'index']);
     });
 
