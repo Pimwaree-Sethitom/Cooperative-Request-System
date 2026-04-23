@@ -21,6 +21,20 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## โครงสร้างโปรเจกต์ (Project Structure)
+
+นี่คือคำอธิบายโฟลเดอร์หลักในโปรเจกต์ Laravel สำหรับผู้เริ่มต้น:
+
+*   **`app/`**: เก็บโค้ดหลักของระบบ เช่น **Models** (จัดการ Database) และ **Controllers** (จัดการ Logic)
+*   **`routes/`**: กำหนดเส้นทางของเว็บไซต์ (URL) เช่น `web.php` สำหรับหน้าเว็บทั่วไป
+*   **`resources/views/`**: เก็บไฟล์หน้าตาของเว็บไซต์ (Blade templates)
+*   **`database/migrations/`**: ไฟล์สำหรับออกแบบและสร้างตารางใน Database
+*   **`public/`**: ไฟล์ที่เข้าถึงได้จากภายนอก เช่น รูปภาพ, CSS, JS
+*   **`config/`**: ไฟล์ตั้งค่าต่างๆ ของระบบ
+*   **`storage/`**: เก็บไฟล์ Log และไฟล์ที่ User อัปโหลด
+*   **`tests/`**: เก็บไฟล์สำหรับเขียนโค้ดทดสอบระบบ (Automated Tests)
+
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
