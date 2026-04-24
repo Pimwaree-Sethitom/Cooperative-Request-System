@@ -69,12 +69,12 @@ docker compose exec app php artisan migrate:fresh --seed
 ### 1. ทดสอบผ่านระบบออนไลน์ (Live API) - *แนะนำสำหรับผู้ตรวจงาน*
 หากต้องการทดสอบระบบที่รันอยู่บน Railway ทันทีโดยไม่ต้องตั้งค่าในเครื่อง:
 - **ดาวน์โหลดไฟล์:** [คลิกที่นี่เพื่อเปิดหน้าเว็บ](https://cooperative-request-system-production.up.railway.app/) แล้วกดปุ่ม **Download & Import**
-- **ไฟล์ต้นฉบับ:** `backend/public/postman/Cooperative API.postman_collection.json`
+- **ไฟล์ต้นฉบับ:** `backend/public/postman/cooperative_api.json`
 - **Base URL:** ตั้งค่าเป็น URL ของ Railway ให้โดยอัตโนมัติ
 
 ### 2. ทดสอบในเครื่องตัวเอง (Local Development)
 หากทำการรัน Docker ในเครื่องตัวเอง:
-- **ใช้ไฟล์:** `postman/Cooperative API.postman_collection.json`
+- **ใช้ไฟล์:** `postman/cooperative_api.json`
 - **Base URL:** `http://localhost:8000/api`
 
 ---

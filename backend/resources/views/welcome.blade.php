@@ -281,11 +281,10 @@
                 </a>
             </div>
 
-            <!-- Card 2: Postman -->
             <div class="card">
                 <h3>📡 Postman Collection</h3>
-                <p>ดาวน์โหลดไฟล์นี้แล้วนำไป <strong>Import</strong> ในโปรแกรม Postman เพื่อเริ่มทดสอบ API ได้ทันที พร้อมระบบเก็บ Token อัตโนมัติ</p>
-                <a href="{{ asset('postman/Cooperative API.postman_collection.json') }}" download class="btn btn-outline">
+                <p>Download this file and <strong>Import</strong> it into Postman to start testing the API immediately. Features automatic token management.</p>
+                <a href="{{ asset('postman/cooperative_api.json') }}" download="cooperative_api.json" class="btn btn-outline">
                     Download & Import
                 </a>
             </div>
