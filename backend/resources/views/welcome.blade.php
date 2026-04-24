@@ -284,9 +284,9 @@
             <!-- Card 2: Postman -->
             <div class="card">
                 <h3>📡 Postman Collection</h3>
-                <p>Test all endpoints instantly. Includes pre-configured variables and automatic token handling.</p>
+                <p>ดาวน์โหลดไฟล์นี้แล้วนำไป <strong>Import</strong> ในโปรแกรม Postman เพื่อเริ่มทดสอบ API ได้ทันที พร้อมระบบเก็บ Token อัตโนมัติ</p>
                 <a href="{{ asset('postman/Cooperative API.postman_collection.json') }}" download class="btn btn-outline">
-                    Download Collection
+                    Download & Import
                 </a>
             </div>
         </div>

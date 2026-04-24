@@ -64,24 +64,35 @@ docker compose exec app php artisan migrate:fresh --seed
 
 ## 📡 การทดสอบ API (Postman)
 
-คุณสามารถนำเข้าไฟล์ **Postman Collection** เพื่อทดสอบ API ได้ทันที:
-- **ไฟล์ Collection:** `postman/Cooperative API.postman_collection.json`
+โปรเจกต์นี้มีไฟล์ Postman Collection เตรียมไว้ให้ 2 รูปแบบตามความสะดวกในการใช้งาน:
+
+### 1. ทดสอบผ่านระบบออนไลน์ (Live API) - *แนะนำสำหรับผู้ตรวจงาน*
+หากต้องการทดสอบระบบที่รันอยู่บน Railway ทันทีโดยไม่ต้องตั้งค่าในเครื่อง:
+- **ดาวน์โหลดไฟล์:** [คลิกที่นี่เพื่อเปิดหน้าเว็บ](https://cooperative-request-system-production.up.railway.app/) แล้วกดปุ่ม **Download & Import**
+- **ไฟล์ต้นฉบับ:** `backend/public/postman/Cooperative API.postman_collection.json`
+- **Base URL:** ตั้งค่าเป็น URL ของ Railway ให้โดยอัตโนมัติ
+
+### 2. ทดสอบในเครื่องตัวเอง (Local Development)
+หากทำการรัน Docker ในเครื่องตัวเอง:
+- **ใช้ไฟล์:** `postman/Cooperative API.postman_collection.json`
 - **Base URL:** `http://localhost:8000/api`
-- **ขั้นตอน:**
-    1. เปิดโปรแกรม Postman
-    2. กดปุ่ม **Import** แล้วเลือกไฟล์ด้านบน
-    3. เมื่อ Login สำเร็จ **Token จะถูกบันทึกลงตัวแปรอัตโนมัติ** คุณสามารถกดเรียก API อื่นๆ ต่อได้เลย
+
+---
+
+### 🛠️ ขั้นตอนการใช้งาน Postman
+1. เปิดโปรแกรม Postman และกดปุ่ม **Import** เพื่อเลือกไฟล์ `.json` ด้านบน
+2. **การเข้าสู่ระบบ:** เรียก API ในโฟลเดอร์ `Auth` (Login Staff หรือ Public)
+3. **ระบบ Token อัตโนมัติ:** เมื่อ Login สำเร็จ ระบบจะบันทึก `{{token}}` ลงในตัวแปรของ Collection ให้โดยอัตโนมัติ คุณสามารถกดเรียก API อื่นๆ (เช่น ยื่นคำขอ หรือ ตรวจสอบรายการ) ต่อได้ทันทีโดยไม่ต้องก๊อปปี้ Token เอง
 
 ---
 
 ## 📂 โครงสร้างโปรเจกต์ (Project Structure)
-
 ```text
 .
 ├── backend/               # โฟลเดอร์ซอร์สโค้ด Laravel
-│   ├── app/               # Logic หลักของระบบ
-│   ├── database/          # Migrations และ Seeders
+│   ├── public/postman/    # Postman สำหรับทดสอบระบบออนไลน์ (Live)
+│   ├── app/               # Logic หลัก (Controllers, Services)
 │   └── routes/            # เส้นทาง API
-├── postman/               # ไฟล์ Postman Collection
-└── docker-compose.yml     # ไฟล์ตั้งค่า Docker
+├── postman/               # Postman สำหรับทดสอบในเครื่องตัวเอง (Local)
+└── docker-compose.yml     # ไฟล์ตั้งค่าสำหรับรัน Docker ในเครื่อง
 ```
