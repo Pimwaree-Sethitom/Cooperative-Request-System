@@ -284,7 +284,9 @@
             <div class="card">
                 <h3>📡 Postman Collection</h3>
                 <p>Download this file and <strong>Import</strong> it into Postman to start testing the API immediately. Features automatic token management.</p>
-                <a href="{{ asset('postman/cooperative_api.json') }}" download="cooperative_api.json" class="btn btn-outline">
+                <a href="{{ asset('postman/cooperative_api.json') }}" 
+                   onclick="event.preventDefault(); fetch(this.href).then(t=>t.blob()).then(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='cooperative_api.json';a.click()});"
+                   class="btn btn-outline">
                     Download & Import
                 </a>
             </div>
