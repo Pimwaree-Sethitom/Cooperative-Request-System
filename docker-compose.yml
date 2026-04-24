@@ -11,6 +11,7 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     working_dir: /var/www
+    command: php-fpm
     volumes:
       - ./backend:/var/www
     networks:

@@ -42,6 +42,11 @@ COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
 
-# Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Make deployment script executable
+RUN chmod +x /var/www/deploy.sh
+
+# Expose port (Cloud platforms will use $PORT anyway)
+EXPOSE 8000
+
+# Default command for deployment
+CMD ["./deploy.sh"]
