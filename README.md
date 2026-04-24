@@ -2,6 +2,11 @@
 
 ระบบยื่นคำขอจัดตั้งสหกรณ์ (Backend API) พัฒนาด้วย Laravel 12 และ Docker
 
+## 🌐 Live Demo
+คุณสามารถทดสอบ API ที่รันอยู่บน Production ได้ที่นี่:
+- **API URL:** `https://cooperative-request-system-production.up.railway.app/api`
+- **สถานะ:** 🟢 Online (Railway)
+
 ## 🚀 วิธีการรันโปรเจกต์ (Getting Started)
 
 ### 1. เตรียมไฟล์สภาพแวดล้อม (.env)
