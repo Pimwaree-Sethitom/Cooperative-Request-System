@@ -39,6 +39,9 @@ COPY . /var/www
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
 
+# Install composer dependencies
+RUN composer install --no-interaction --no-dev --optimize-autoloader
+
 # Change current user to www
 USER www
 
