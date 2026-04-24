@@ -4,7 +4,7 @@
 
 ## 🌐 Live Demo
 คุณสามารถทดสอบ API ที่รันอยู่บน Production ได้ที่นี่:
-- **API URL:** `https://cooperative-request-system-production.up.railway.app/api`
+- **API URL:** `https://cooperative-request-system-production.up.railway.app`
 - **สถานะ:** 🟢 Online (Railway)
 
 ## 🚀 วิธีการรันโปรเจกต์ (Getting Started)
