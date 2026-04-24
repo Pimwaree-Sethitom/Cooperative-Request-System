@@ -271,16 +271,8 @@
         </header>
 
         <div class="grid">
-            <!-- Card 1: Live Demo -->
-            <div class="card">
-                <h3>🚀 Live API Demo</h3>
-                <p>Access the production API directly on Railway. Use this endpoint as your Base URL in Postman.</p>
-                <a href="https://cooperative-request-system-production.up.railway.app/api" target="_blank" class="btn btn-primary">
-                    Open API Endpoint
-                </a>
-            </div>
 
-            <!-- Card 2: GitHub -->
+            <!-- Card 1: GitHub -->
             <div class="card">
                 <h3>📂 Source Code</h3>
                 <p>Explore the clean code structure, service layer pattern, and containerization setup on GitHub.</p>
@@ -289,11 +281,11 @@
                 </a>
             </div>
 
-            <!-- Card 3: Postman -->
+            <!-- Card 2: Postman -->
             <div class="card">
                 <h3>📡 Postman Collection</h3>
                 <p>Test all endpoints instantly. Includes pre-configured variables and automatic token handling.</p>
-                <a href="/postman/Cooperative API.postman_collection.json" download class="btn btn-outline">
+                <a href="{{ asset('postman/Cooperative API.postman_collection.json') }}" download class="btn btn-outline">
                     Download Collection
                 </a>
             </div>
