@@ -14,7 +14,6 @@ class AuthService
      */
     public function register(array $data)
     {
-        // กำหนด Role เริ่มต้นเป็น public (ถ้าไม่ได้ระบุมา)
         $publicRole = Role::where('name', 'public')->first();
 
         $user = User::create([

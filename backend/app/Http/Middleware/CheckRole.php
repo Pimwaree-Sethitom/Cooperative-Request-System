@@ -16,7 +16,7 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        // 1. ตรวจสอบว่า Login หรือยัง?
+        
         if (!$request->user()) {
             return response()->json([
                 'status' => 'error',
@@ -26,8 +26,6 @@ class CheckRole
             ], 401);
         }
 
-        // 2. ตรวจสอบว่า User มี Role ตรงตามที่ต้องการหรือไม่?
-        // เราเข้าถึง role->name ได้เพราะเราตั้งความสัมพันธ์ (Relationship) ไว้ใน User Model แล้ว
         if ($request->user()->role->name !== $role) {
             return response()->json([
                 'status' => 'error',

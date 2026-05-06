@@ -10,8 +10,6 @@ class CooperativeMember extends Model
 {
     use HasFactory;
 
-    // เนื่องจากเราไม่ใช้ timestamps (created_at, updated_at) แบบมาตรฐาน 
-    // แต่เรามีแค่ created_at ใน Migration เราจึงต้องปิดการทำงานอัตโนมัติ
     public $timestamps = false;
 
     protected $fillable = [

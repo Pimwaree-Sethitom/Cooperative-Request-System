@@ -24,7 +24,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // [เจ้าหน้าที่] Staff Routes
     Route::middleware('role:staff')->prefix('staff')->group(function () {
-        Route::get('/dashboard', fn() => response()->json(['message' => 'Staff Dashboard']));
         Route::get('/users', [UserController::class, 'index']);
         
         // การจัดการคำขอสหกรณ์สำหรับ Staff
@@ -36,7 +35,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // [ประชาชน] Public Routes
     Route::middleware('role:public')->group(function () {
-        Route::get('/public/dashboard', fn() => response()->json(['message' => 'Public Dashboard']));
         
         // การยื่นคำขอสหกรณ์สำหรับประชาชน
         Route::prefix('cooperatives')->group(function () {

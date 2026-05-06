@@ -10,9 +10,6 @@ class UserController extends Controller
 {
     protected UserService $userService;
 
-    /**
-     * สร้าง Instance ใหม่พร้อมฉีด (Inject) UserService เข้ามา
-     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
@@ -23,7 +20,6 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
-        // เรียกใช้ Logic จาก Service
         $users = $this->userService->getAllUsersWithRoles();
 
         return $this->success($users, 'เรียกข้อมูลผู้ใช้สำเร็จ');

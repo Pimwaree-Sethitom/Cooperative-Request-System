@@ -14,14 +14,14 @@ class CooperativeService
      */
     public function createRequest(array $data)
     {
-        // ใช้ Transaction เพื่อป้องกันข้อมูลบันทึกไม่ครบ (ถ้าพังต้องพังทั้งหมด)
+    
         return DB::transaction(function () use ($data) {
             
             // 1. สร้างข้อมูลสหกรณ์
             $cooperative = Cooperative::create([
                 'name' => $data['name'],
                 'description' => $data['description'] ?? null,
-                'initial_member_count' => count($data['members']), // เก็บจำนวนสมาชิกจากที่ส่งมาจริง
+                'initial_member_count' => count($data['members']), 
                 'status' => 'pending',
                 'created_by' => Auth::id(),
             ]);
@@ -45,7 +45,7 @@ class CooperativeService
      */
     public function getMyRequests()
     {
-        // ดึงสหกรณ์ของตัวเอง พร้อมโหลดรายชื่อสมาชิกออกมาด้วย (Eager Loading)
+        // ดึงสหกรณ์ของตัวเอง พร้อมโหลดรายชื่อสมาชิกออกมาด้วย 
         return Cooperative::with(['creator', 'members'])
             ->where('created_by', Auth::id())
             ->orderBy('created_at', 'desc')
