@@ -11,16 +11,16 @@ use App\Http\Controllers\Api\CooperativeController;
 |--------------------------------------------------------------------------
 */
 
-// --- Public Routes (ไม่ต้องล็อกอิน) ---
+// --- Public Routes ---
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// --- Protected Routes (ต้องล็อกอินผ่าน Sanctum) ---
+// --- Protected Routes ---
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // [เจ้าหน้าที่] Staff Routes
+    // Staff Routes
     Route::middleware('role:staff')->prefix('staff')->group(function () {
         Route::get('/users', [UserController::class, 'index']);
         
@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
 
-    // [ประชาชน] Public Routes
+    // Public Routes
     Route::middleware('role:public')->group(function () {
         
         // การยื่นคำขอสหกรณ์สำหรับประชาชน
