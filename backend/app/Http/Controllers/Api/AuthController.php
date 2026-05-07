@@ -58,13 +58,4 @@ class AuthController extends Controller
         return $this->success(null, 'ออกจากระบบสำเร็จ');
     }
 
-    /**
-     * ดูข้อมูลส่วนตัว (Profile)
-     */
-    public function me(Request $request): JsonResponse
-    {
-        $user = $request->user()->load('role');
-
-        return $this->success($user, 'ดึงข้อมูลส่วนตัวสำเร็จ');
-    }
 }

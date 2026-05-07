@@ -18,8 +18,6 @@ Route::post('/login', [AuthController::class, 'login']);
 // --- Protected Routes (ต้องล็อกอินผ่าน Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
     
-    // User Profile & Logout
-    Route::get('/profile', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // [เจ้าหน้าที่] Staff Routes
