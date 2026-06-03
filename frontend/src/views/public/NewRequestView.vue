@@ -39,10 +39,10 @@
         </div>
       </div>
 
-      <!-- สมาชิกผู้ก่อตั้ง -->
+      <!-- ข้อมูลสมาชิก -->
       <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
         <div class="flex items-center justify-between mb-1">
-          <h2 class="text-sm font-bold text-gray-800">สมาชิกผู้ก่อตั้ง</h2>
+          <h2 class="text-sm font-bold text-gray-800">ข้อมูลสมาชิก</h2>
           <button
             type="button"
             @click="addMember"
@@ -87,8 +87,7 @@
             <button
               type="button"
               @click="removeMember(i)"
-              :disabled="members.length <= 10"
-              class="p-1.5 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 transition disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-gray-300 shrink-0"
+              class="p-1.5 rounded-lg text-gray-300 hover:text-red-400 hover:bg-red-50 transition shrink-0"
             >
               <X class="w-4 h-4" />
             </button>
@@ -156,14 +155,15 @@ function addMember() {
 }
 
 function removeMember(index) {
-  if (members.value.length > 10) {
-    members.value.splice(index, 1)
+  members.value.splice(index, 1)
+  if (members.value.length < 10) {
+    members.value.push({ id: nextId++, fullName: '', nationalId: '', phone: '' })
   }
 }
 
 async function handleSubmit() {
   if (members.value.length < 10) {
-    error.value = 'ต้องมีสมาชิกผู้ก่อตั้งอย่างน้อย 10 คน'
+    error.value = 'ต้องมีข้อมูลสมาชิกอย่างน้อย 10 คน'
     return
   }
   loading.value = true
