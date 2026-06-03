@@ -51,6 +51,17 @@ services:
       - cooperative-network
 
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cooperative-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    networks:
+      - cooperative-network
+
 networks:
   cooperative-network:
     driver: bridge
