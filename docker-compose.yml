@@ -14,6 +14,7 @@ services:
     command: php-fpm
     volumes:
       - ./backend:/var/www
+      - vendor_data:/var/www/vendor
     networks:
       - cooperative-network
 
@@ -71,4 +72,6 @@ networks:
 
 volumes:
   dbdata:
+    driver: local
+  vendor_data:
     driver: local
