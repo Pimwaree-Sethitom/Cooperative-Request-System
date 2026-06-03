@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { authService } from '@/services/auth.service'
+
+const MOCK_USERS = [
+  { email: 'public@test.com', password: 'public123', name: 'Public User', role: 'public' },
+  { email: 'staff@test.com',  password: 'staff123',  name: 'Staff User',  role: 'staff'  },
+]
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref(JSON.parse(localStorage.getItem('user')) || null)
@@ -9,19 +13,25 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!token.value)
 
   async function login(credentials) {
-    const data = await authService.login(credentials)
-    token.value = data.token
-    user.value = data.user
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('user', JSON.stringify(data.user))
+    const found = MOCK_USERS.find(
+      u => u.email === credentials.email && u.password === credentials.password
+    )
+    if (!found) throw new Error('อีเมลหรือรหัสผ่านไม่ถูกต้อง')
+    const mockToken = 'mock-token-' + Date.now()
+    const mockUser  = { name: found.name, email: found.email, role: found.role }
+    token.value = mockToken
+    user.value  = mockUser
+    localStorage.setItem('token', mockToken)
+    localStorage.setItem('user', JSON.stringify(mockUser))
   }
 
   async function register(payload) {
-    const data = await authService.register(payload)
-    token.value = data.token
-    user.value = data.user
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('user', JSON.stringify(data.user))
+    const mockToken = 'mock-token-' + Date.now()
+    const mockUser  = { name: payload.name, email: payload.email, role: 'public' }
+    token.value = mockToken
+    user.value  = mockUser
+    localStorage.setItem('token', mockToken)
+    localStorage.setItem('user', JSON.stringify(mockUser))
   }
 
   function logout() {

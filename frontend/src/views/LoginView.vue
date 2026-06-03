@@ -50,14 +50,16 @@
       </div>
 
       <div class="demo-accounts">
-        <div class="demo-item">
-          <span class="demo-label">ผู้ใช้ทั่วไป:</span>
-          <span class="demo-value">john@example.com</span>
-        </div>
-        <div class="demo-item">
-          <span class="demo-label">เจ้าหน้าที่:</span>
-          <span class="demo-value">admin@gov.th</span>
-        </div>
+        <button
+          v-for="acc in demoAccounts"
+          :key="acc.email"
+          type="button"
+          class="demo-item"
+          @click="fillDemo(acc)"
+        >
+          <span class="demo-label">{{ acc.label }}:</span>
+          <span class="demo-value">{{ acc.email }}</span>
+        </button>
       </div>
 
       <p class="auth-link">
@@ -79,6 +81,16 @@ const auth = useAuthStore()
 const form = ref({ email: '', password: '' })
 const loading = ref(false)
 const error = ref('')
+
+const demoAccounts = [
+  { label: 'ผู้ใช้ทั่วไป', email: 'public@test.com', password: 'public123' },
+  { label: 'เจ้าหน้าที่',  email: 'staff@test.com',  password: 'staff123'  },
+]
+
+function fillDemo(acc) {
+  form.value.email    = acc.email
+  form.value.password = acc.password
+}
 
 async function handleSubmit() {
   loading.value = true
@@ -233,11 +245,23 @@ async function handleSubmit() {
 }
 
 .demo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: 100%;
   background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 6px;
   padding: 0.5rem 0.875rem;
   font-size: 0.875rem;
   color: #374151;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+.demo-item:hover {
+  background: #f0fdf4;
+  border-color: #2d7a58;
 }
 
 .demo-label {
