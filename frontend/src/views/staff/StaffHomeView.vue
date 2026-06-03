@@ -120,28 +120,40 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import StatsCard from '@/components/ui/StatsCard.vue'
+import { staffService } from '@/services/staff.service'
 
 const auth = useAuthStore()
 
-const requests = [
-  { id: 1, name: 'สหกรณ์ A',        submitter: 'Public User', members: 10, status: 'rejected'  },
-  { id: 2, name: 'สหกรณ์ทดสอบ',     submitter: 'Public User', members: 10, status: 'approved'  },
-  { id: 3, name: 'test coop',        submitter: 'Public User', members: 10, status: 'approved'  },
-  { id: 4, name: '????????????????', submitter: 'Public User', members: 10, status: 'rejected'  },
-]
+const requests = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await staffService.getAll()
+    requests.value = res.data ?? []
+  } catch {}
+})
 
 const stats = computed(() => ({
-  total:    requests.length,
-  pending:  requests.filter(r => r.status === 'pending').length,
-  approved: requests.filter(r => r.status === 'approved').length,
-  rejected: requests.filter(r => r.status === 'rejected').length,
+  total:    requests.value.length,
+  pending:  requests.value.filter(r => r.status === 'pending').length,
+  approved: requests.value.filter(r => r.status === 'approved').length,
+  rejected: requests.value.filter(r => r.status === 'rejected').length,
 }))
 
-const pendingRequests = computed(() => requests.filter(r => r.status === 'pending'))
+const pendingRequests = computed(() =>
+  requests.value
+    .filter(r => r.status === 'pending')
+    .map(r => ({
+      id:        r.id,
+      name:      r.name,
+      submitter: r.creator?.full_name ?? 'ผู้ใช้งาน',
+      members:   r.initial_member_count,
+    }))
+)
 
 const circumference = 2 * Math.PI * 38
 
