@@ -52,13 +52,16 @@ services:
 
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: node:22-alpine
     container_name: cooperative-frontend
     restart: unless-stopped
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
     ports:
-      - "5173:80"
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     networks:
       - cooperative-network
 
