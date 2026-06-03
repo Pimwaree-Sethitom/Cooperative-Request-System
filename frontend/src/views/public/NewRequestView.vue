@@ -1,9 +1,6 @@
-<template>
+﻿<template>
   <div>
-    <div class="px-8 h-20 flex flex-col justify-center bg-white border-b border-gray-200">
-      <h1 class="text-xl font-bold text-gray-900">ยื่นคำขอใหม่</h1>
-      <p class="text-sm text-gray-500 mt-0.5">กรอกรายละเอียดด้านล่าง โดยต้องมีสมาชิกก่อตั้งอย่างน้อย 10 คน</p>
-    </div>
+    <AppPageHeader title="ยื่นคำขอใหม่" subtitle="กรอกรายละเอียดด้านล่าง โดยต้องมีสมาชิกก่อตั้งอย่างน้อย 10 คน" />
     <div class="p-8 max-w-3xl">
 
     <RouterLink to="/" class="inline-flex items-center gap-1 text-sm text-primary-600 hover:underline mb-6">
@@ -133,6 +130,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import { useRouter } from 'vue-router'
 import { ChevronLeft, Plus, X } from '@lucide/vue'
 

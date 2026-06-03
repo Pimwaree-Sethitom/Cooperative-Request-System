@@ -10,17 +10,17 @@ const routes = [
       {
         path: '',
         name: 'home',
-        component: () => import('@/views/HomeView.vue'),
+        component: () => import('@/views/public/HomeView.vue'),
       },
       {
         path: 'my-requests',
         name: 'my-requests',
-        component: () => import('@/views/MyRequestsView.vue'),
+        component: () => import('@/views/public/MyRequestsView.vue'),
       },
       {
         path: 'new-request',
         name: 'new-request',
-        component: () => import('@/views/NewRequestView.vue'),
+        component: () => import('@/views/public/NewRequestView.vue'),
       },
     ],
   },
@@ -31,12 +31,12 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: () => import('@/views/LoginView.vue'),
+        component: () => import('@/views/auth/LoginView.vue'),
       },
       {
         path: 'register',
         name: 'register',
-        component: () => import('@/views/RegisterView.vue'),
+        component: () => import('@/views/auth/RegisterView.vue'),
       },
     ],
   },

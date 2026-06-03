@@ -1,9 +1,6 @@
-<template>
+﻿<template>
   <div>
-    <div class="px-8 h-20 flex flex-col justify-center bg-white border-b border-gray-200">
-      <h1 class="text-xl font-bold text-gray-900">คำขอของฉัน</h1>
-      <p class="text-sm text-gray-500 mt-0.5">คำขอจดทะเบียนสหกรณ์ทั้งหมดของคุณ</p>
-    </div>
+    <AppPageHeader title="คำขอของฉัน" subtitle="คำขอจดทะเบียนสหกรณ์ทั้งหมดของคุณ" />
     <div class="p-8">
 
     <!-- Filter tabs -->
@@ -129,6 +126,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import { FileText, PlusCircle, X } from '@lucide/vue'
 
 const activeTab = ref('all')
