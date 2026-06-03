@@ -24,7 +24,12 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function register(payload) {
-    const res = await authService.register(payload)
+    const res = await authService.register({
+      full_name:             payload.name,
+      email:                 payload.email,
+      password:              payload.password,
+      password_confirmation: payload.password_confirmation,
+    })
     const { user: apiUser, token: apiToken } = res.data
     const mapped = {
       name:  apiUser.full_name,

@@ -2,6 +2,9 @@
   <div>
     <AppPageHeader title="คำขอของฉัน" subtitle="คำขอจดทะเบียนสหกรณ์ทั้งหมดของคุณ" />
     <div class="p-8">
+      <div v-if="isLoading" class="py-20 text-center text-sm text-gray-400">กำลังโหลด...</div>
+      <div v-else-if="error" class="py-20 text-center text-sm text-red-500">{{ error }}</div>
+      <template v-else>
 
     <!-- Filter tabs -->
     <div class="flex gap-1 mb-4 bg-gray-100 p-1 rounded-lg w-fit border border-gray-200">
@@ -120,78 +123,54 @@
         </div>
       </div>
     </div>
-  </div>
+      </template>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import { FileText, PlusCircle, X } from '@lucide/vue'
+import { cooperativeService } from '@/services/cooperative.service'
 
-const activeTab = ref('all')
-const selected  = ref(null)
+const activeTab  = ref('all')
+const selected   = ref(null)
+const isLoading  = ref(false)
+const error      = ref('')
 
-const cooperatives = ref([
-  {
-    id: 1,
-    name: 'สมาคมทอผ้าไหม',
-    description: 'สหกรณ์รวมกลุ่มผู้ทอผ้าไหมในชุมชน เพื่อส่งเสริมการตลาดและรักษาภูมิปัญญาท้องถิ่น',
-    members: [
-      { id: 1, fullName: 'สมชาย ใจดี',      nationalId: '1234567890123', phone: '081-234-5678' },
-      { id: 2, fullName: 'สมหญิง รักดี',     nationalId: '9876543210987', phone: '082-345-6789' },
-      { id: 3, fullName: 'วิชัย สุขสันต์',    nationalId: '1111222233334', phone: '083-456-7890' },
-      { id: 4, fullName: 'มาลี ดอกไม้',      nationalId: '4444555566667', phone: '084-567-8901' },
-      { id: 5, fullName: 'ประสิทธิ์ งามดี',  nationalId: '7777888899990', phone: '085-678-9012' },
-    ],
-    status: 'approved',
-    createdAt: '2024-01-15T09:00:00Z',
-    reviewedAt: '2024-01-20T14:00:00Z',
-    staffNote: 'เอกสารครบถ้วน ผ่านการตรวจสอบเรียบร้อย',
-    reviewerName: 'นายวิชัย สมใจ',
-  },
-  {
-    id: 2,
-    name: 'สหกรณ์หัตถกรรมดอยสูง',
-    description: 'กลุ่มผู้ผลิตงานหัตถกรรมจากวัสดุธรรมชาติบนพื้นที่สูง',
-    members: [
-      { id: 1, fullName: 'อนงค์ ชาวดอย',     nationalId: '2222333344445', phone: '086-789-0123' },
-      { id: 2, fullName: 'จันทร์ แสงเงิน',   nationalId: '5555666677778', phone: '087-890-1234' },
-      { id: 3, fullName: 'สุรศักดิ์ ป่าไม้', nationalId: '8888999900001', phone: '088-901-2345' },
-    ],
-    status: 'rejected',
-    createdAt: '2024-01-10T08:30:00Z',
-    reviewedAt: '2024-01-12T11:00:00Z',
-    staffNote: 'จำนวนสมาชิกไม่ครบตามเกณฑ์ขั้นต่ำ 10 คน กรุณายื่นคำขอใหม่',
-    reviewerName: 'นางสาวปวีณา รักงาน',
-  },
-  {
-    id: 3,
-    name: 'สหกรณ์เกษตรกรหุบเขาเขียว',
-    description: 'สหกรณ์เกษตรกรรมที่รวมกลุ่มชาวนาและชาวสวนในพื้นที่หุบเขา เน้นเกษตรอินทรีย์',
-    members: Array.from({ length: 11 }, (_, i) => ({ id: i + 1, fullName: `สมาชิก ${i + 1}`, nationalId: '', phone: '' })),
-    status: 'approved',
-    createdAt: '2024-01-08T07:00:00Z',
-    reviewedAt: '2024-01-10T10:00:00Z',
-    staffNote: null,
-    reviewerName: 'นายสมศักดิ์ ตรวจการ',
-  },
-  {
-    id: 4,
-    name: 'กลุ่มประมงชายฝั่งบ้านท่าเรือ',
-    description: 'รวมกลุ่มชาวประมงพื้นบ้านเพื่อบริหารจัดการทรัพยากรชายฝั่งอย่างยั่งยืน',
-    members: [
-      { id: 1, fullName: 'สมัย ชาวเล',        nationalId: '2222444466668', phone: '082-111-2222' },
-      { id: 2, fullName: 'ชลิต ปลาสด',         nationalId: '3333555577779', phone: '083-222-3333' },
-      { id: 3, fullName: 'วันเพ็ญ คลื่นทะเล', nationalId: '4444666688880', phone: '084-333-4444' },
-    ],
-    status: 'pending',
-    createdAt: '2024-02-01T09:00:00Z',
-    reviewedAt: null,
-    staffNote: null,
-    reviewerName: null,
-  },
-])
+const cooperatives = ref([])
+
+function mapCooperative(c) {
+  return {
+    id:           c.id,
+    name:         c.name,
+    description:  c.description,
+    status:       c.status,
+    createdAt:    c.created_at,
+    reviewedAt:   c.reviewed_at,
+    staffNote:    c.staff_note,
+    reviewerName: c.reviewer?.full_name ?? null,
+    members:      (c.members ?? []).map(m => ({
+      id:         m.id,
+      fullName:   m.full_name,
+      nationalId: m.national_id,
+      phone:      m.phone,
+    })),
+  }
+}
+
+onMounted(async () => {
+  isLoading.value = true
+  try {
+    const res = await cooperativeService.getMy()
+    cooperatives.value = (res.data ?? []).map(mapCooperative)
+  } catch {
+    error.value = 'ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่'
+  } finally {
+    isLoading.value = false
+  }
+})
 
 const tabs = [
   { label: 'ทั้งหมด',     value: 'all'      },

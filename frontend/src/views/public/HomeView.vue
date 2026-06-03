@@ -123,24 +123,38 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import StatsCard from '@/components/ui/StatsCard.vue'
 import StatusBadge from '@/components/ui/StatusBadge.vue'
+import { cooperativeService } from '@/services/cooperative.service'
 
 const auth = useAuthStore()
 
-const recentRequests = [
-  { id: 1, name: 'สมาคมทอผ้าไหม',            province: 'ขอนแก่น',   members: 67, status: 'approved', date: '20 ม.ค. 2567' },
-  { id: 2, name: 'สหกรณ์หัตถกรรมดอยสูง',      province: 'แม่ฮ่องสอน', members: 28, status: 'rejected', date: '12 ม.ค. 2567' },
-  { id: 3, name: 'สหกรณ์เกษตรกรหุบเขาเขียว', province: 'เชียงใหม่',  members: 45, status: 'approved', date: '10 ม.ค. 2567' },
-]
+const requests = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await cooperativeService.getMy()
+    requests.value = res.data ?? []
+  } catch {}
+})
+
+const recentRequests = computed(() =>
+  requests.value.slice(0, 3).map(r => ({
+    id:     r.id,
+    name:   r.name,
+    members: r.initial_member_count,
+    status: r.status,
+    date:   new Date(r.created_at).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }),
+  }))
+)
 
 const stats = computed(() => ({
-  total:    recentRequests.length,
-  pending:  recentRequests.filter(r => r.status === 'pending').length,
-  approved: recentRequests.filter(r => r.status === 'approved').length,
-  rejected: recentRequests.filter(r => r.status === 'rejected').length,
+  total:    requests.value.length,
+  pending:  requests.value.filter(r => r.status === 'pending').length,
+  approved: requests.value.filter(r => r.status === 'approved').length,
+  rejected: requests.value.filter(r => r.status === 'rejected').length,
 }))
 </script>

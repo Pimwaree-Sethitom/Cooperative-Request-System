@@ -133,6 +133,7 @@ import { ref } from 'vue'
 import AppPageHeader from '@/components/shared/AppPageHeader.vue'
 import { useRouter } from 'vue-router'
 import { ChevronLeft, Plus, X } from '@lucide/vue'
+import { cooperativeService } from '@/services/cooperative.service'
 
 const router = useRouter()
 
@@ -168,10 +169,20 @@ async function handleSubmit() {
   loading.value = true
   error.value = ''
   try {
-    await new Promise(r => setTimeout(r, 800))
+    await cooperativeService.create({
+      name:        form.value.name,
+      description: form.value.description || null,
+      members:     members.value.map(m => ({
+        full_name:   m.fullName,
+        national_id: m.nationalId || null,
+        phone:       m.phone || null,
+      })),
+    })
     router.push('/my-requests')
-  } catch {
-    error.value = 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง'
+  } catch (e) {
+    error.value = e?.errors
+      ? Object.values(e.errors).flat().join(', ')
+      : (e?.message || 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง')
   } finally {
     loading.value = false
   }

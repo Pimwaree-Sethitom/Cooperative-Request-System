@@ -43,9 +43,9 @@
           <input
             v-model="form.password"
             type="password"
-            placeholder="อย่างน้อย 6 ตัวอักษร"
+            placeholder="อย่างน้อย 8 ตัวอักษร"
             required
-            minlength="6"
+            minlength="8"
             autocomplete="new-password"
           />
         </div>
